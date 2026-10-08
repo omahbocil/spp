@@ -1,7 +1,7 @@
 import { state, upsertPayment, deletePayment, paymentId } from "../store.js";
 import { studentsWithPackage, activeStudents, kartuTahun } from "../logic.js";
 import { h, render, rupiah, MONTHS, todayISO, byText } from "../util.js";
-import { toast, nav, setOptions } from "../ui.js";
+import { toast, nav, setOptions, CARA_BAYAR, attachCaraBayar, caraText } from "../ui.js";
 
 export function mount(root, q) {
   const now = new Date();
@@ -32,6 +32,11 @@ export function mount(root, q) {
               <input id="ttd" name="ttd" list="daftarPenerima" placeholder="pilih atau ketik nama penerima"><datalist id="daftarPenerima"></datalist></div>
             <div><label for="stempel">Stempel</label><select id="stempel" name="stempel"><option>Ya</option><option selected>Belum</option></select></div>
           </div>
+          <div class="row">
+            <div><label for="cara_bayar">Cara Pembayaran</label><select id="cara_bayar" name="cara_bayar">${CARA_BAYAR.map((c) => h`<option>${c}</option>`)}</select></div>
+            <div><label for="bank">Bank</label><input id="bank" name="bank" data-req="1" placeholder="cth: BCA, BRI, Mandiri"></div>
+            <div><label for="no_rekening">No Rekening</label><input id="no_rekening" name="no_rekening" data-req="1" inputmode="numeric" placeholder="cth: 1234567890"></div>
+          </div>
           <div class="mt"><button class="btn yellow" id="simpan" type="submit">Simpan Pembayaran</button>
             <a class="btn small" href="#/penerima">Kelola Daftar Penerima</a></div>
         </form>
@@ -45,6 +50,17 @@ export function mount(root, q) {
   let jumlahDirty = false, editFilled = false;
   f.bulan.value = editBulan || (tahun === now.getFullYear() ? now.getMonth() + 1 : 1);
   f.jumlah.addEventListener("input", () => { jumlahDirty = true; });
+  const syncCara = attachCaraBayar(f.cara_bayar, f.bank, f.no_rekening);
+  let caraDirty = false;
+  [f.cara_bayar, f.bank, f.no_rekening].forEach((el) => el.addEventListener("input", () => { caraDirty = true; }));
+  // Pilih penerima (TTD) -> cara bayar, bank, no rekening terisi otomatis dari data Penerima (masih bisa diubah).
+  function fillFromRecipient() {
+    const r = state.recipients.find((x) => x.nama === f.ttd.value.trim());
+    if (!r || caraDirty) return;
+    f.cara_bayar.value = r.cara_bayar || "Cash"; f.bank.value = r.bank || ""; f.no_rekening.value = r.no_rekening || "";
+    syncCara();
+  }
+  f.ttd.addEventListener("change", fillFromRecipient);
 
   function go(extra = {}) {
     const p = new URLSearchParams({ student: studentId || "", tahun: $("#tahunPilih").value || tahun, ...extra });
@@ -61,6 +77,7 @@ export function mount(root, q) {
       student_id: studentId, bulan: parseInt(f.bulan.value, 10), tahun: th,
       jumlah: parseInt(f.jumlah.value, 10) || 0, tgl_bayar: f.tgl_bayar.value,
       ttd: f.ttd.value.trim(), stempel: f.stempel.value,
+      cara_bayar: f.cara_bayar.value, bank: f.bank.value.trim(), no_rekening: f.no_rekening.value.trim(),
     });
     toast("Pembayaran SPP berhasil disimpan.");
     nav(`#/input-spp?student=${encodeURIComponent(studentId)}&tahun=${th}`);
@@ -98,6 +115,8 @@ export function mount(root, q) {
       editFilled = true;
       f.jumlah.value = payEdit.jumlah; f.tgl_bayar.value = payEdit.tgl_bayar || todayISO();
       f.ttd.value = payEdit.ttd || ""; f.stempel.value = payEdit.stempel || "Belum"; jumlahDirty = true;
+      f.cara_bayar.value = payEdit.cara_bayar || "Cash"; f.bank.value = payEdit.bank || ""; f.no_rekening.value = payEdit.no_rekening || "";
+      caraDirty = true; syncCara();
     } else if (!jumlahDirty && full && full.paket_price != null) {
       f.jumlah.value = full.paket_price;
     }
@@ -107,10 +126,10 @@ export function mount(root, q) {
       $("#kartuJudul").textContent = `📋 Kartu SPP Bulanan — ${siswa.nama} (${tahun})`;
       const kartu = kartuTahun(state.payments, studentId, tahun);
       render($("#kartu"), h`<table>
-        <thead><tr><th>No</th><th>Bulan</th><th>Iuran</th><th>TTD</th><th>Stempel</th><th>Status</th><th></th></tr></thead>
+        <thead><tr><th>No</th><th>Bulan</th><th>Iuran</th><th>TTD</th><th>Cara Bayar</th><th>Stempel</th><th>Status</th><th></th></tr></thead>
         <tbody>${kartu.map((k) => h`<tr>
           <td>${k.no}</td><td>${k.bulan}</td>
-          <td>${k.payment ? rupiah(k.payment.jumlah) : ""}</td><td>${k.payment ? k.payment.ttd : ""}</td><td>${k.payment ? k.payment.stempel : ""}</td>
+          <td>${k.payment ? rupiah(k.payment.jumlah) : ""}</td><td>${k.payment ? k.payment.ttd : ""}</td><td>${k.payment ? caraText(k.payment) : ""}</td><td>${k.payment ? k.payment.stempel : ""}</td>
           <td>${k.payment ? h`<span class="badge ok">Lunas</span>` : h`<span class="badge no">Belum</span>`}</td>
           <td class="nowrap">${k.payment ? h`<a class="btn small" href="#/input-spp?student=${studentId}&tahun=${tahun}&edit_bulan=${k.no}">Edit</a>
             <button class="btn small red" type="button" data-del="${k.payment.id}" data-nama="${k.bulan}">Hapus</button>` : ""}</td>

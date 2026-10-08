@@ -2,6 +2,15 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-08",
+    judul: "Cara pembayaran (Cash, Transfer, QRIS)",
+    detail: [
+      "Menu Penerima dan Input SPP kini punya kolom Cara Pembayaran: Cash, Transfer, atau QRIS.",
+      "Jika Transfer, muncul kolom Bank dan No Rekening.",
+      "Di Input SPP, memilih Penerima (TTD) mengisi otomatis cara bayar, bank, dan no rekening dari data Penerima; tetap bisa diubah.",
+    ],
+  },
+  {
+    tanggal: "2026-10-08",
     judul: "Data Siswa di Dashboard",
     detail: [
       "Di bawah grafik ada jumlah siswa aktif dan tidak aktif beserta daftarnya: foto, No Akun, nama, paket, asal sekolah, umur, dan awal masuk.",

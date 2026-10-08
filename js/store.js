@@ -97,17 +97,22 @@ export function deletePackage(id) {
 }
 
 // ---------- penerima ----------
-export function saveRecipient(id, { nama, jabatan }) {
+export function saveRecipient(id, { nama, jabatan, cara_bayar, bank, no_rekening }) {
   const ref = id ? doc(db, "recipients", id) : doc(collection(db, "recipients"));
-  fire(setDoc(ref, { nama, jabatan: jabatan || null }, { merge: true }));
+  const tf = cara_bayar === "Transfer";
+  fire(setDoc(ref, { nama, jabatan: jabatan || null, cara_bayar: cara_bayar || "Cash",
+    bank: tf ? (bank || null) : null, no_rekening: tf ? (no_rekening || null) : null }, { merge: true }));
 }
 export function deleteRecipient(id) { fire(deleteDoc(doc(db, "recipients", id))); }
 
 // ---------- pembayaran ----------
 // ID dokumen deterministik: satu siswa hanya punya satu pembayaran per (bulan, tahun).
 export const paymentId = (studentId, tahun, bulan) => `${studentId}_${tahun}_${bulan}`;
-export function upsertPayment({ student_id, bulan, tahun, jumlah, tgl_bayar, ttd, stempel }) {
+export function upsertPayment({ student_id, bulan, tahun, jumlah, tgl_bayar, ttd, stempel, cara_bayar, bank, no_rekening }) {
   fire(setDoc(doc(db, "payments", paymentId(student_id, tahun, bulan)),
-    { student_id, bulan, tahun, jumlah, tgl_bayar: tgl_bayar || null, ttd: ttd || "", stempel: stempel || "Belum" }));
+    { student_id, bulan, tahun, jumlah, tgl_bayar: tgl_bayar || null, ttd: ttd || "", stempel: stempel || "Belum",
+      cara_bayar: cara_bayar || "Cash",
+      bank: cara_bayar === "Transfer" ? (bank || null) : null,
+      no_rekening: cara_bayar === "Transfer" ? (no_rekening || null) : null }));
 }
 export function deletePayment(id) { fire(deleteDoc(doc(db, "payments", id))); }

@@ -36,3 +36,22 @@ export function attachDateMask(input) {
     e.target.value = v;
   });
 }
+
+export const CARA_BAYAR = ["Cash", "Transfer", "QRIS"];
+
+/** Tampilkan kolom Bank & No Rekening hanya saat cara bayar = Transfer. */
+export function attachCaraBayar(select, ...fields) {
+  const toggle = () => {
+    const on = select.value === "Transfer";
+    fields.forEach((el) => { el.closest("div").classList.toggle("hidden", !on); el.required = on && el.dataset.req === "1"; });
+  };
+  select.addEventListener("change", toggle);
+  toggle();
+  return toggle;
+}
+
+/** Ringkas cara bayar untuk tabel: "Transfer — BCA 1234567". */
+export function caraText(o) {
+  if (!o || !o.cara_bayar) return "-";
+  return o.cara_bayar === "Transfer" ? `Transfer — ${[o.bank, o.no_rekening].filter(Boolean).join(" ") || "-"}` : o.cara_bayar;
+}
