@@ -83,7 +83,7 @@ Kalau muncul error `auth/unauthorized-domain`: Firebase Console → **Authentica
 ## Bagian 6 — Memperbarui aplikasi di kemudian hari
 
 1. Di repo GitHub: **Add file → Upload files**, drag file yang berubah (nama sama akan ditimpa), **Commit changes**.
-2. Setelah itu buka aplikasi saat online; versi baru dimuat otomatis (kadang perlu ditutup dan dibuka sekali lagi).
+2. Setelah itu buka aplikasi saat online; akan muncul pemberitahuan "Versi baru tersedia". Ketuk **Perbarui Sekarang** untuk memakai versi baru.
 3. Kalau kamu **menambah atau mengganti nama file** `.js`/`.css`, tambahkan juga ke daftar `SHELL` di `sw.js` dan naikkan `VERSION` (mis. `spp-v2`).
 
 Ubah data kop surat/kartu (alamat, telepon, CP) di `js/util.js` bagian `BIMBEL_INFO`.

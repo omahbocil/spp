@@ -2,6 +2,14 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-08",
+    judul: "Ajakan pasang aplikasi & pemberitahuan versi baru",
+    detail: [
+      "Saat link dibuka di HP (belum dipasang), muncul petunjuk dan tombol untuk memasang aplikasi ke layar utama.",
+      "Jika ada versi baru, muncul pemberitahuan \"Versi baru tersedia\" dengan tombol Perbarui Sekarang.",
+    ],
+  },
+  {
+    tanggal: "2026-10-08",
     judul: "Cara pembayaran (Cash, Transfer, QRIS)",
     detail: [
       "Menu Penerima dan Input SPP kini punya kolom Cara Pembayaran: Cash, Transfer, atau QRIS.",

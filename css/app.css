@@ -150,7 +150,7 @@ body.print-mode .print-root{display:block;padding:14px;padding-top:calc(14px + e
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff}
-  .print-bar,.info-cetak,.toasts{display:none !important}
+  .print-bar,.info-cetak,.toasts,.pwa-banner{display:none !important}
   body.print-mode .print-root{padding:0}
   .zoom-foto{cursor:auto}
   .cetak-laporan{max-width:none}
@@ -190,3 +190,12 @@ body.print-mode .print-root{display:block;padding:14px;padding-top:calc(14px + e
 .siswa-tiles .tile{flex:1;min-width:130px;background:var(--bg);border:2px solid var(--line);border-radius:8px;padding:10px;text-align:center;font:inherit;font-size:.8rem;color:var(--fg);cursor:pointer}
 .siswa-tiles .tile b{display:block;font-size:1.1rem;color:var(--navy)}
 .siswa-tiles .tile.on{background:#fff8e1;border-color:var(--yellow)}
+
+/* ---------- banner pasang / update PWA ---------- */
+.pwa-banner{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:9000;width:min(94vw,440px);display:flex;flex-direction:column;gap:8px}
+.pwa-banner:empty{display:none}
+.pwa-card{background:#fff;border:2px solid var(--yellow);border-radius:12px;padding:12px 14px;box-shadow:0 6px 20px rgba(0,0,0,.25);font-size:.83rem;color:var(--fg)}
+.pwa-card b{color:var(--navy);font-size:.92rem}
+.pwa-card p{margin:6px 0 10px}
+.pwa-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pwa-actions .btn:not(.yellow){background:var(--bg);color:var(--navy);border:1.5px solid var(--line)}

@@ -3,14 +3,12 @@ import { firebaseConfig } from "../config.js";
 import { h, render, esc } from "./util.js";
 import { toast } from "./ui.js";
 import "./zoom.js";
+import "./pwa.js";
 
 const $ = (s) => document.getElementById(s);
 const boot = $("boot"), loginEl = $("login"), appEl = $("appShell"), mainEl = $("main"), printRoot = $("printRoot");
 
 const configured = firebaseConfig.apiKey && !String(firebaseConfig.apiKey).startsWith("ISI_");
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
-}
 
 function fatal(title, body) {
   boot.classList.add("hidden");
@@ -57,13 +55,6 @@ async function start() {
   $("nav").addEventListener("click", (e) => { if (e.target.closest("a")) document.body.classList.remove("sidebar-open"); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") document.body.classList.remove("sidebar-open"); });
   $("logout").addEventListener("click", () => fb.signOut(fb.auth));
-
-  let installEvt = null;
-  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; $("install").classList.remove("hidden"); });
-  $("install").addEventListener("click", async () => {
-    if (!installEvt) return;
-    installEvt.prompt(); await installEvt.userChoice; installEvt = null; $("install").classList.add("hidden");
-  });
 
   function paintStatus() {
     const chip = $("status");

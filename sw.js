@@ -1,13 +1,13 @@
 // Service worker: membuat aplikasi bisa dibuka offline.
 // Naikkan VERSION setiap kali kamu mengubah daftar file di SHELL.
-const VERSION = "spp-v5";
+const VERSION = "spp-v6";
 const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/10.14.1/";
 const FIREBASE_ENTRY = ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].map((f) => FIREBASE_BASE + f);
 
 const SHELL = [
   "./", "index.html", "config.js", "manifest.json", "css/app.css",
   "js/main.js", "js/firebase.js", "js/store.js", "js/logic.js", "js/util.js", "js/ui.js",
-  "js/photo.js", "js/zoom.js", "js/changelog.js", "js/chart.js",
+  "js/photo.js", "js/zoom.js", "js/changelog.js", "js/chart.js", "js/pwa.js",
   "js/views/dashboard.js", "js/views/siswa.js", "js/views/paket.js", "js/views/penerima.js",
   "js/views/inputSpp.js", "js/views/laporan.js", "js/views/cetak.js", "js/views/print.js",
   "js/views/riwayat.js", "js/views/password.js",
@@ -37,8 +37,12 @@ self.addEventListener("install", (event) => {
     const cache = await caches.open(VERSION);
     await cache.addAll(SHELL);
     try { for (const u of FIREBASE_ENTRY) await precacheModuleGraph(cache, u); } catch (_) { /* dicache saat runtime */ }
-    await self.skipWaiting();
+    // Tidak langsung aktif: halaman menampilkan "Versi baru tersedia" dan meminta user memperbarui.
   })());
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
