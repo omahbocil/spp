@@ -174,3 +174,19 @@ body.print-mode .print-root{display:block;padding:14px;padding-top:calc(14px + e
   .kartu td{padding:1.1mm .8mm;border-width:.25mm}
   .footer-tag{margin-top:2mm;padding:1.3mm;font-size:7pt;border-radius:2mm}
 }
+
+/* ---------- grafik dashboard ---------- */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.chart-box{background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px;min-width:0}
+.chart-box h3{margin:0 0 6px;font-size:.85rem;color:var(--navy)}
+.chart-box p{margin:6px 0 0}
+.chart{width:100%;height:auto;display:block}
+.ch-axis{stroke:var(--line);stroke-width:1.5}
+.ch-bar{fill:var(--blue)} .ch-bar.sel{fill:var(--yellow)} .ch-bar.navy{fill:var(--navy)} .ch-bar.green{fill:var(--green)} .ch-bar.red{fill:var(--red)}
+.ch-val{font-size:10px;font-weight:700;fill:var(--navy)}
+.ch-lbl{font-size:10px;fill:var(--muted)}
+
+/* ---------- daftar siswa dashboard ---------- */
+.siswa-tiles .tile{flex:1;min-width:130px;background:var(--bg);border:2px solid var(--line);border-radius:8px;padding:10px;text-align:center;font:inherit;font-size:.8rem;color:var(--fg);cursor:pointer}
+.siswa-tiles .tile b{display:block;font-size:1.1rem;color:var(--navy)}
+.siswa-tiles .tile.on{background:#fff8e1;border-color:var(--yellow)}

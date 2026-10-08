@@ -2,6 +2,22 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-08",
+    judul: "Data Siswa di Dashboard",
+    detail: [
+      "Di bawah grafik ada jumlah siswa aktif dan tidak aktif beserta daftarnya: foto, No Akun, nama, paket, asal sekolah, umur, dan awal masuk.",
+    ],
+  },
+  {
+    tanggal: "2026-10-08",
+    judul: "Grafik SPP di Dashboard",
+    detail: [
+      "Di bawah Reminder Tunggakan SPP ada grafik jumlah siswa (aktif, sudah bayar, belum bayar) untuk bulan terpilih.",
+      "Grafik jumlah SPP atau jumlah siswa bayar per bulan (dalam satu tahun) dan per tahun.",
+      "Bulan dan tahun bisa dipilih lewat menu pilihan di atas grafik.",
+    ],
+  },
+  {
+    tanggal: "2026-10-08",
     judul: "Kolom Akhir dihapus dari form siswa",
     detail: [
       "Kolom \"Akhir (dd-mm-yyyy)\" dihapus dari form Tambah/Edit Siswa.",

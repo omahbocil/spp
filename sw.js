@@ -1,13 +1,13 @@
 // Service worker: membuat aplikasi bisa dibuka offline.
 // Naikkan VERSION setiap kali kamu mengubah daftar file di SHELL.
-const VERSION = "spp-v2";
+const VERSION = "spp-v4";
 const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/10.14.1/";
 const FIREBASE_ENTRY = ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].map((f) => FIREBASE_BASE + f);
 
 const SHELL = [
   "./", "index.html", "config.js", "manifest.json", "css/app.css",
   "js/main.js", "js/firebase.js", "js/store.js", "js/logic.js", "js/util.js", "js/ui.js",
-  "js/photo.js", "js/zoom.js", "js/changelog.js",
+  "js/photo.js", "js/zoom.js", "js/changelog.js", "js/chart.js",
   "js/views/dashboard.js", "js/views/siswa.js", "js/views/paket.js", "js/views/penerima.js",
   "js/views/inputSpp.js", "js/views/laporan.js", "js/views/cetak.js", "js/views/print.js",
   "js/views/riwayat.js", "js/views/password.js",

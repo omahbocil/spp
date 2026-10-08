@@ -115,3 +115,13 @@ export function paymentsCSV(students, payments) {
     });
   return "\uFEFF" + lines.map((r) => r.map(csvCell).join(",")).join("\r\n");
 }
+
+/** Total SPP & jumlah siswa (unik) yang membayar, per tahun. Hanya pembayaran siswa yang masih ada. */
+export function rowsPerTahun(students, payments, tahunList) {
+  const ids = new Set(students.map((s) => s.id));
+  return tahunList.map((tahun) => {
+    const list = payments.filter((p) => p.tahun === tahun && ids.has(p.student_id));
+    return { tahun, jumlahSiswa: new Set(list.map((p) => p.student_id)).size,
+      total: list.reduce((a, p) => a + (p.jumlah || 0), 0) };
+  });
+}
