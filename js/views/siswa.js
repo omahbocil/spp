@@ -18,7 +18,6 @@ export function mount(root, q) {
         </div>
         <div class="row">
           <div><label for="mulai">Mulai (dd-mm-yyyy)</label><input id="mulai" name="mulai" placeholder="dd-mm-yyyy" pattern="\\d{2}-\\d{2}-\\d{4}" maxlength="10" inputmode="numeric"></div>
-          <div><label for="akhir">Akhir (dd-mm-yyyy)</label><input id="akhir" name="akhir" placeholder="dd-mm-yyyy" pattern="\\d{2}-\\d{2}-\\d{4}" maxlength="10" inputmode="numeric"></div>
           <div><label for="paket_id">Paket</label><select id="paket_id" name="paket_id"></select></div>
           <div><label for="jatuh_tempo">Tgl Jatuh Tempo (1-28)</label><input id="jatuh_tempo" name="jatuh_tempo" type="number" min="1" max="28" value="10"></div>
         </div>
@@ -47,7 +46,7 @@ export function mount(root, q) {
   const prev = root.querySelector("#fotoPrev");
   let desiredPaket = "", newFoto, filled = false, noAkunDirty = false, existingFoto = null;
 
-  attachDateMask(f.mulai); attachDateMask(f.akhir);
+  attachDateMask(f.mulai);
   f.no_akun.addEventListener("input", () => { noAkunDirty = true; });
   f.paket_id.addEventListener("change", () => { desiredPaket = f.paket_id.value; });
   f.tahun_lahir.addEventListener("input", () => {
@@ -71,7 +70,7 @@ export function mount(root, q) {
     if (findDuplicateNoAkun(state.students, no_akun, editId)) { toast("No Akun sudah dipakai siswa lain.", "error"); return; }
     saveStudent(editId, {
       no_akun, nama: f.nama.value.trim(), status: f.status.value,
-      mulai: f.mulai.value, akhir: f.akhir.value, paket_id: f.paket_id.value,
+      mulai: f.mulai.value, paket_id: f.paket_id.value,
       jatuh_tempo: parseInt(f.jatuh_tempo.value, 10) || 10,
       asal_sekolah: f.asal_sekolah.value.trim(), kelas: f.kelas.value.trim(),
       tahun_lahir: parseInt(f.tahun_lahir.value, 10) || null,
@@ -100,7 +99,7 @@ export function mount(root, q) {
       if (s) {
         filled = true;
         f.no_akun.value = s.no_akun || ""; f.nama.value = s.nama || ""; f.status.value = s.status || "Aktif";
-        f.mulai.value = s.mulai || ""; f.akhir.value = s.akhir || "";
+        f.mulai.value = s.mulai || "";
         desiredPaket = s.paket_id || ""; f.paket_id.value = desiredPaket;
         f.jatuh_tempo.value = s.jatuh_tempo || 10;
         f.asal_sekolah.value = s.asal_sekolah || ""; f.kelas.value = s.kelas || "";

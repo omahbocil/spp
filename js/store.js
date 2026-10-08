@@ -62,7 +62,7 @@ const fire = (promise) => { promise.catch((e) => onWriteError(e)); };
 export function saveStudent(id, data, foto) {
   const payload = {
     no_akun: data.no_akun, nama: data.nama, status: data.status,
-    mulai: data.mulai || null, akhir: data.akhir || null,
+    mulai: data.mulai || null,
     paket_id: data.paket_id || null, jatuh_tempo: data.jatuh_tempo || 10,
     asal_sekolah: data.asal_sekolah || null, kelas: data.kelas || null,
     tahun_lahir: data.tahun_lahir || null,

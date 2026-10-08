@@ -2,6 +2,13 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-08",
+    judul: "Kolom Akhir dihapus dari form siswa",
+    detail: [
+      "Kolom \"Akhir (dd-mm-yyyy)\" dihapus dari form Tambah/Edit Siswa.",
+    ],
+  },
+  {
+    tanggal: "2026-10-08",
     judul: "Pindah ke aplikasi PWA + database Firestore",
     detail: [
       "Aplikasi bisa dipasang di layar HP (Add to Home Screen) dan dibuka seperti aplikasi biasa.",
