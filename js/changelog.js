@@ -1,6 +1,13 @@
 // Riwayat perubahan aplikasi (menu Riwayat). Tambahkan entri baru di urutan paling atas setiap ada update.
 export const CHANGELOG = [
   {
+    tanggal: "2026-10-10",
+    judul: "Data siswa diurutkan berdasarkan No Akun",
+    detail: [
+      "Semua halaman yang menampilkan data siswa (Siswa, Input SPP, Laporan, Cetak, Dashboard, Reminder) kini urut B001, B002, B003, dan seterusnya.",
+    ],
+  },
+  {
     tanggal: "2026-10-08",
     judul: "Ajakan pasang aplikasi & pemberitahuan versi baru",
     detail: [

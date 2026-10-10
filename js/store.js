@@ -2,6 +2,7 @@
 // Tulis ke Firestore TIDAK di-await di UI: saat offline, promise baru selesai setelah online,
 // sedangkan data lokal langsung berubah. Error (mis. izin ditolak) ditangkap oleh fire().
 import { db, collection, doc, onSnapshot, setDoc, deleteDoc, writeBatch } from "./firebase.js";
+import { byNoAkun } from "./util.js";
 
 const NAMES = ["students", "packages", "recipients", "payments"];
 
@@ -34,6 +35,7 @@ export function startSync() {
       { includeMetadataChanges: true },
       (snap) => {
         state[name] = snap.docs.map((d) => ({ ...d.data(), id: d.id }));
+        if (name === "students") state.students.sort(byNoAkun); // semua halaman memakai urutan No Akun
         loaded[name] = true;
         pendingBy[name] = snap.metadata.hasPendingWrites;
         state.ready = NAMES.every((n) => loaded[n]);

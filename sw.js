@@ -1,6 +1,6 @@
 // Service worker: membuat aplikasi bisa dibuka offline.
 // Naikkan VERSION setiap kali kamu mengubah daftar file di SHELL.
-const VERSION = "spp-v6";
+const VERSION = "spp-v7";
 const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/10.14.1/";
 const FIREBASE_ENTRY = ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].map((f) => FIREBASE_BASE + f);
 

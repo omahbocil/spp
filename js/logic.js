@@ -1,5 +1,5 @@
 // Logika murni (tanpa DOM / Firebase) — dipindahkan dari app.py agar mudah diuji.
-import { MONTHS, byText } from "./util.js";
+import { MONTHS, byText, byNoAkun } from "./util.js";
 
 export function hitungUsia(tahunLahir, now = new Date()) {
   return tahunLahir ? now.getFullYear() - Number(tahunLahir) : null;
@@ -18,7 +18,7 @@ export function studentsWithPackage(students, packages, now = new Date()) {
         usia: hitungUsia(s.tahun_lahir, now),
       };
     })
-    .sort(byText("nama"));
+    .sort(byNoAkun);
 }
 export const activeStudents = (list) => list.filter((s) => s.status === "Aktif");
 
@@ -108,7 +108,7 @@ export function paymentsCSV(students, payments) {
   const lines = [["No Akun", "Nama Siswa", "Bulan", "Tahun", "Jumlah Iuran", "Tanggal Bayar", "TTD", "Stempel"]];
   payments
     .filter((p) => st.has(p.student_id))
-    .sort((a, b) => a.tahun - b.tahun || a.bulan - b.bulan)
+    .sort((a, b) => a.tahun - b.tahun || a.bulan - b.bulan || byNoAkun(st.get(a.student_id), st.get(b.student_id)))
     .forEach((p) => {
       const s = st.get(p.student_id);
       lines.push([s.no_akun, s.nama, MONTHS[p.bulan - 1] || "", p.tahun, p.jumlah, p.tgl_bayar || "", p.ttd || "", p.stempel || ""]);

@@ -36,6 +36,11 @@ export const todayISO = (d = new Date()) => `${d.getFullYear()}-${pad2(d.getMont
 export const byText = (key) => (a, b) =>
   String(a[key] ?? "").localeCompare(String(b[key] ?? ""), "id", { sensitivity: "base" });
 
+/** Urut No Akun secara natural: B001, B002, ... B010 (angka dibandingkan sebagai angka, bukan teks). */
+export const byNoAkun = (a, b) =>
+  String(a.no_akun ?? "").localeCompare(String(b.no_akun ?? ""), "id", { numeric: true, sensitivity: "base" })
+  || String(a.nama ?? "").localeCompare(String(b.nama ?? ""), "id", { sensitivity: "base" });
+
 export function downloadFile(filename, mime, text) {
   const blob = new Blob([text], { type: mime });
   const url = URL.createObjectURL(blob);
