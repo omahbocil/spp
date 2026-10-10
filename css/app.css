@@ -210,3 +210,10 @@ body.print-mode .print-root{display:block;padding:14px;padding-top:calc(14px + e
 .flash.warn{background:#fff8e1;border:1.5px solid var(--yellow);color:#7a5800}
 .card label:has(input[type=radio]){display:block;font-weight:400}
 .card label input[type=radio]{width:auto;margin-right:6px}
+
+/* ---------- sub-menu sidebar (Laporan) ---------- */
+.sidebar nav .subnav{display:none;flex-direction:column;gap:4px;margin:-2px 0 2px 14px}
+.sidebar nav .subnav.open{display:flex}
+.sidebar nav .subnav a{background:#fff;border:1.5px solid var(--line);border-left:4px solid var(--line);font-size:.8rem;padding:8px 12px}
+.sidebar nav .subnav a.active{background:var(--yellow);border-left-color:var(--navy)}
+.sidebar nav a.has-sub::after{content:"▾";float:right;opacity:.6}

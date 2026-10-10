@@ -32,15 +32,19 @@ async function start() {
   const V = {
     "": await import("./views/dashboard.js"), siswa: await import("./views/siswa.js"),
     paket: await import("./views/paket.js"), penerima: await import("./views/penerima.js"),
-    "input-spp": await import("./views/inputSpp.js"), laporan: await import("./views/laporan.js"),
+    "input-spp": await import("./views/inputSpp.js"), 
     "cetak-spp": await import("./views/cetak.js"), riwayat: await import("./views/riwayat.js"),
     database: await import("./views/database.js"),
     "ganti-password": await import("./views/password.js"),
   };
+  const L = await import("./views/laporan.js");
+  V["laporan/tahunan"] = { mount: L.mountTahunan };
+  V["laporan/bulanan"] = { mount: L.mountBulanan };
+  V["laporan/siswa"] = { mount: L.mountSiswa };
   const P = await import("./views/print.js");
   const PRINT = { "print/kartu": P.mountKartu, "print/tahun": P.mountTahun, "print/siswa": P.mountSiswa, "print/bulan": P.mountBulan };
   const NAV = [["", "Dashboard"], ["siswa", "Siswa"], ["paket", "Paket"], ["penerima", "Penerima"],
-    ["input-spp", "Input SPP"], ["laporan", "Laporan"], ["cetak-spp", "Cetak SPP"], ["database", "Database"], ["riwayat", "Riwayat"]];
+    ["input-spp", "Input SPP"], ["laporan", "Laporan", [["laporan/tahunan", "Tahunan"], ["laporan/bulanan", "Bulanan"], ["laporan/siswa", "Siswa"]]], ["cetak-spp", "Cetak SPP"], ["database", "Database"], ["riwayat", "Riwayat"]];
 
   store.setWriteErrorHandler((e) => {
     console.error(e);
@@ -50,7 +54,11 @@ async function start() {
   });
 
   // ---------- shell ----------
-  $("nav").innerHTML = NAV.map(([p, label]) => `<a href="#/${p}" data-p="${p}">${label}</a>`).join("");
+  // Menu dengan sub-menu (Laporan): induk membuka halaman pertama; sub-menu tampil saat berada di bagian itu.
+  $("nav").innerHTML = NAV.map(([p, label, subs]) => subs
+    ? `<a href="#/${subs[0][0]}" data-p="${p}" class="has-sub">${label}</a><div class="subnav" data-for="${p}">`
+      + subs.map(([sp, sl]) => `<a href="#/${sp}" data-p="${sp}">${sl}</a>`).join("") + `</div>`
+    : `<a href="#/${p}" data-p="${p}">${label}</a>`).join("");
   $("menuToggle").addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
   $("backdrop").addEventListener("click", () => document.body.classList.remove("sidebar-open"));
   $("nav").addEventListener("click", (e) => { if (e.target.closest("a")) document.body.classList.remove("sidebar-open"); });
@@ -82,7 +90,8 @@ async function start() {
   function route() {
     if (current && current.destroy) current.destroy();
     current = null;
-    const { path, q } = parseHash();
+    const { path: rawPath, q } = parseHash();
+    const path = rawPath === "laporan" ? "laporan/tahunan" : rawPath; // #/laporan = Laporan Tahunan
     const isPrint = path.startsWith("print/");
     document.body.classList.toggle("print-mode", isPrint);
     document.title = "SPP Omah Bocil";
@@ -92,7 +101,11 @@ async function start() {
       current = (PRINT[path] || (() => ({})))(printRoot, q) || {};
     } else {
       const view = V[path] || V[""];
-      document.querySelectorAll("#nav a").forEach((a) => a.classList.toggle("active", a.dataset.p === (V[path] ? path : "")));
+      const cur = V[path] ? path : "";
+      const section = cur.split("/")[0]; // "laporan" untuk semua halaman laporan
+      document.querySelectorAll("#nav a").forEach((a) => a.classList.toggle("active",
+        a.dataset.p === cur || (a.classList.contains("has-sub") && a.dataset.p === section)));
+      document.querySelectorAll("#nav .subnav").forEach((d) => d.classList.toggle("open", d.dataset.for === section));
       current = view.mount(mainEl, q) || {};
     }
     window.scrollTo(0, 0);

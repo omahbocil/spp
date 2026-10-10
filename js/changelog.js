@@ -2,6 +2,14 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-10",
+    judul: "Laporan punya sub-menu",
+    detail: [
+      "Menu Laporan dipecah menjadi tiga halaman: Tahunan (Laporan Keuangan per Tahun), Bulanan (Laporan Keuangan per Bulan - Tahun), dan Siswa (Laporan atas Nama Siswa).",
+      "Export CSV/JSON ada di halaman Tahunan. Tombol Kembali di halaman cetak mengarah ke sub-menu yang sesuai.",
+    ],
+  },
+  {
+    tanggal: "2026-10-10",
     judul: "Menu Database: penggunaan, backup, dan restore",
     detail: [
       "Menu baru Database menampilkan jumlah dokumen, perkiraan ukuran data, dan batas paket gratis Firestore (penyimpanan, baca, tulis, hapus).",

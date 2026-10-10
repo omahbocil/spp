@@ -73,10 +73,10 @@ export function mountTahun(root, q) {
   pageStyle(A4);
   const tahun = parseInt(q.tahun, 10) || new Date().getFullYear();
   function draw() {
-    if (!state.ready) return loading(root, "#/laporan");
+    if (!state.ready) return loading(root, "#/laporan/tahunan");
     const { rows, grandTotal } = rowsPerBulan(state.payments, tahun);
     document.title = `Cetak Laporan Tahun ${tahun}`;
-    render(root, h`${toolbar("#/laporan")}<div class="cetak-laporan">${kop()}
+    render(root, h`${toolbar("#/laporan/tahunan")}<div class="cetak-laporan">${kop()}
       <h2>Laporan Keuangan Tahun ${tahun}</h2>
       <table><thead><tr><th>Bulan</th><th>Jml Bayar</th><th>Total</th></tr></thead>
         <tbody>${rows.map((r) => h`<tr><td>${r.bulan}</td><td>${r.jumlahBayar}</td><td>${rupiah(r.total)}</td></tr>`)}</tbody>
@@ -89,12 +89,12 @@ export function mountTahun(root, q) {
 export function mountSiswa(root, q) {
   pageStyle(A4);
   function draw() {
-    if (!state.ready) return loading(root, "#/laporan");
+    if (!state.ready) return loading(root, "#/laporan/siswa");
     const s = state.students.find((x) => x.id === q.siswa);
     document.title = "Cetak Laporan Siswa";
-    if (!s) return render(root, h`${toolbar("#/laporan")}<div class="cetak-laporan">${kop()}<p>Siswa tidak ditemukan.</p></div>`);
+    if (!s) return render(root, h`${toolbar("#/laporan/siswa")}<div class="cetak-laporan">${kop()}<p>Siswa tidak ditemukan.</p></div>`);
     const rw = riwayatSiswa(state.payments, s.id);
-    render(root, h`${toolbar("#/laporan")}<div class="cetak-laporan">${kop()}
+    render(root, h`${toolbar("#/laporan/siswa")}<div class="cetak-laporan">${kop()}
       <h2 style="margin-bottom:0">Riwayat Pembayaran — ${s.nama}</h2>
       <p class="sub">No Akun: ${s.no_akun}${s.kelas ? h` · Kelas: ${s.kelas}` : ""}</p>
       <table><thead><tr><th>Bulan</th><th>Tahun</th><th>Jumlah</th><th>Tgl Bayar</th><th>TTD</th><th>Stempel</th></tr></thead>
@@ -111,11 +111,11 @@ export function mountBulan(root, q) {
   const now = new Date();
   const bulan = parseInt(q.bulan, 10) || now.getMonth() + 1, tahun = parseInt(q.tahun, 10) || now.getFullYear();
   function draw() {
-    if (!state.ready) return loading(root, "#/laporan");
+    if (!state.ready) return loading(root, "#/laporan/bulanan");
     const sb = statusBulan(state.students, state.payments, bulan, tahun);
     document.title = `Cetak Laporan Bulan ${MONTHS[bulan - 1]} ${tahun}`;
-    render(root, h`${toolbar("#/laporan")}<div class="cetak-laporan">${kop()}
-      <h2>Laporan Bulan ${MONTHS[bulan - 1]} ${tahun}</h2>
+    render(root, h`${toolbar("#/laporan/bulanan")}<div class="cetak-laporan">${kop()}
+      <h2>Laporan Keuangan Bulan ${MONTHS[bulan - 1]} ${tahun}</h2>
       <div class="stat"><div><b>${sb.rows.length}</b>Siswa Aktif</div><div><b>${sb.lunas}</b>Sudah Bayar</div>
         <div><b>${sb.rows.length - sb.lunas}</b>Belum Bayar</div><div><b>${rupiah(sb.total)}</b>Total Terkumpul</div></div>
       <table><thead><tr><th>No Akun</th><th>Nama</th><th>Jumlah</th><th>Tgl Bayar</th><th>Status</th></tr></thead>
