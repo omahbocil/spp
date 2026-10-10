@@ -2,6 +2,15 @@
 export const CHANGELOG = [
   {
     tanggal: "2026-10-10",
+    judul: "Menu Database: penggunaan, backup, dan restore",
+    detail: [
+      "Menu baru Database menampilkan jumlah dokumen, perkiraan ukuran data, dan batas paket gratis Firestore (penyimpanan, baca, tulis, hapus).",
+      "Backup: unduh seluruh data (termasuk foto) menjadi satu file JSON.",
+      "Restore: pulihkan dari file backup dengan pemeriksaan file, pilihan Gabungkan atau Ganti semua, dan cadangan otomatis sebelum restore.",
+    ],
+  },
+  {
+    tanggal: "2026-10-10",
     judul: "Data siswa diurutkan berdasarkan No Akun",
     detail: [
       "Semua halaman yang menampilkan data siswa (Siswa, Input SPP, Laporan, Cetak, Dashboard, Reminder) kini urut B001, B002, B003, dan seterusnya.",

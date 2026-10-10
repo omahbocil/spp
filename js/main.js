@@ -34,12 +34,13 @@ async function start() {
     paket: await import("./views/paket.js"), penerima: await import("./views/penerima.js"),
     "input-spp": await import("./views/inputSpp.js"), laporan: await import("./views/laporan.js"),
     "cetak-spp": await import("./views/cetak.js"), riwayat: await import("./views/riwayat.js"),
+    database: await import("./views/database.js"),
     "ganti-password": await import("./views/password.js"),
   };
   const P = await import("./views/print.js");
   const PRINT = { "print/kartu": P.mountKartu, "print/tahun": P.mountTahun, "print/siswa": P.mountSiswa, "print/bulan": P.mountBulan };
   const NAV = [["", "Dashboard"], ["siswa", "Siswa"], ["paket", "Paket"], ["penerima", "Penerima"],
-    ["input-spp", "Input SPP"], ["laporan", "Laporan"], ["cetak-spp", "Cetak SPP"], ["riwayat", "Riwayat"]];
+    ["input-spp", "Input SPP"], ["laporan", "Laporan"], ["cetak-spp", "Cetak SPP"], ["database", "Database"], ["riwayat", "Riwayat"]];
 
   store.setWriteErrorHandler((e) => {
     console.error(e);

@@ -199,3 +199,14 @@ body.print-mode .print-root{display:block;padding:14px;padding-top:calc(14px + e
 .pwa-card p{margin:6px 0 10px}
 .pwa-actions{display:flex;gap:8px;flex-wrap:wrap}
 .pwa-actions .btn:not(.yellow){background:var(--bg);color:var(--navy);border:1.5px solid var(--line)}
+
+/* ---------- menu Database ---------- */
+.meter-row{margin:10px 0}
+.meter-head{display:flex;justify-content:space-between;gap:10px;font-size:.8rem;margin-bottom:4px;flex-wrap:wrap}
+.meter{height:12px;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.meter-fill{height:100%;border-radius:6px;min-width:2px}
+.meter-fill.ok{background:var(--green)} .meter-fill.warn{background:var(--yellow)} .meter-fill.bad{background:var(--red)}
+.warn-text{color:#b45309;font-weight:600}
+.flash.warn{background:#fff8e1;border:1.5px solid var(--yellow);color:#7a5800}
+.card label:has(input[type=radio]){display:block;font-weight:400}
+.card label input[type=radio]{width:auto;margin-right:6px}

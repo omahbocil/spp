@@ -1,6 +1,6 @@
 // Service worker: membuat aplikasi bisa dibuka offline.
 // Naikkan VERSION setiap kali kamu mengubah daftar file di SHELL.
-const VERSION = "spp-v7";
+const VERSION = "spp-v8";
 const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/10.14.1/";
 const FIREBASE_ENTRY = ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].map((f) => FIREBASE_BASE + f);
 
@@ -10,7 +10,7 @@ const SHELL = [
   "js/photo.js", "js/zoom.js", "js/changelog.js", "js/chart.js", "js/pwa.js",
   "js/views/dashboard.js", "js/views/siswa.js", "js/views/paket.js", "js/views/penerima.js",
   "js/views/inputSpp.js", "js/views/laporan.js", "js/views/cetak.js", "js/views/print.js",
-  "js/views/riwayat.js", "js/views/password.js",
+  "js/views/riwayat.js", "js/views/database.js", "js/backup.js", "js/views/password.js",
   "assets/logo_omahbocil.png", "assets/icon-192.png", "assets/icon-512.png",
   "assets/icon-maskable-512.png", "assets/apple-touch-icon.png",
 ];
